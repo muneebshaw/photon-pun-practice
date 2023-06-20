@@ -1,5 +1,4 @@
 using Photon.Pun;
-using Photon.Pun.Demo.PunBasics;
 using UnityEngine;
 
 /// <summary>
@@ -67,16 +66,16 @@ public class RFMPlayerX : MonoBehaviourPunCallbacks, IPunObservable
     void Start()
     {
         
-        // CameraWork _cameraWork = this.gameObject.GetComponent<CameraWork>();
+        CameraWorkX cameraWorkX = this.gameObject.GetComponent<CameraWorkX>();
 
-        // if (_cameraWork != null)
-        // {
+        if (cameraWorkX != null)
+        {
             if (photonView.IsMine)
             {
-                CameraTargetSetter.Instance.SetTarget(cameraTarget);
-                // _cameraWork.OnStartFollowing();
+                // CameraTargetSetter.Instance.SetTarget(cameraTarget);
+                cameraWorkX.OnStartFollowing(cameraTarget);
             }
-        // }
+        }
         else
         {
             Debug.LogError("<Color=Red><a>Missing</a></Color> CameraWork Component on playerPrefab.", this);
