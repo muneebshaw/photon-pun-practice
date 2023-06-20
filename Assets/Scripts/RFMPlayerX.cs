@@ -23,7 +23,7 @@ public class RFMPlayerX : MonoBehaviourPunCallbacks, IPunObservable
     
     #region Private Fields
 
-    [SerializeField] private Transform cameraTarget;
+    [SerializeField] public Transform cameraTarget;
     
     [Tooltip("The Beams GameObject to control")]
     [SerializeField] private GameObject beams;
@@ -66,20 +66,20 @@ public class RFMPlayerX : MonoBehaviourPunCallbacks, IPunObservable
     void Start()
     {
         
-        CameraWorkX cameraWorkX = this.gameObject.GetComponent<CameraWorkX>();
-
-        if (cameraWorkX != null)
-        {
-            if (photonView.IsMine)
-            {
-                // CameraTargetSetter.Instance.SetTarget(cameraTarget);
-                cameraWorkX.OnStartFollowing(cameraTarget);
-            }
-        }
-        else
-        {
-            Debug.LogError("<Color=Red><a>Missing</a></Color> CameraWork Component on playerPrefab.", this);
-        }
+        // CameraWorkX cameraWorkX = this.gameObject.GetComponent<CameraWorkX>();
+        //
+        // if (cameraWorkX != null)
+        // {
+        //     if (photonView.IsMine)
+        //     {
+        //         // CameraTargetSetter.Instance.SetTarget(cameraTarget);
+        //         cameraWorkX.OnStartFollowing(cameraTarget);
+        //     }
+        // }
+        // else
+        // {
+        //     Debug.LogError("<Color=Red><a>Missing</a></Color> CameraWork Component on playerPrefab.", this);
+        // }
         
         if (PlayerUiPrefab != null)
         {

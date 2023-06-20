@@ -3,17 +3,21 @@ using UnityEngine;
 
 public class CameraTargetSetter : MonoBehaviour
 {
-    public static CameraTargetSetter Instance;
     private CinemachineVirtualCamera _camera;
 
     private void Awake()
     {
-        if (Instance == null) Instance = this;
         _camera = GetComponent<CinemachineVirtualCamera>();
     }
 
-    public void SetTarget(Transform target)
+    private void LateUpdate()
     {
-        _camera.Follow = target;
+        if (Time.frameCount % 50 == 0)
+        {
+            if (!_camera.Follow)
+            {
+                _camera.Follow = RFMPlayerX.LocalPlayerInstance.GetComponent<RFMPlayerX>().cameraTarget;
+            }
+        }
     }
 }
