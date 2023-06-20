@@ -98,7 +98,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1541663340
 Transform:
   m_ObjectHideFlags: 0
@@ -1593,6 +1593,7 @@ MonoBehaviour:
   Health: 1
   PlayerUiPrefab: {fileID: 3952793156853285680, guid: 0e7b0d5f3f922fe4da54fffd5b8b2afd,
     type: 3}
+  cameraTarget: {fileID: 0}
   beams: {fileID: 1541663339}
 --- !u!114 &1980155437
 MonoBehaviour:
