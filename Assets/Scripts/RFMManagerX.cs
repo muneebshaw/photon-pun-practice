@@ -101,6 +101,7 @@ public class RFMManagerX : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             Debug.LogError("1");
+            PhotonView photonView = PhotonView.Get(this);
             photonView.RPC(nameof(StartCountDownRPC), RpcTarget.Others);
             Debug.LogError("2");
         }
