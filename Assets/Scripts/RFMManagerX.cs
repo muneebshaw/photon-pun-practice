@@ -109,6 +109,7 @@ public class RFMManagerX : MonoBehaviourPunCallbacks
             Debug.LogError("PhotonNetwork : MasterClient spawning hunters.");
             PhotonNetwork.Instantiate(hunterPrefab.name, huntersSpawnArea.position, huntersSpawnArea.rotation);
         }
+        Debug.LogError("Finished!");
     }
 
     #endregion
