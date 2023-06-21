@@ -105,7 +105,7 @@ public class RFMManagerX : MonoBehaviourPunCallbacks
             yield return new WaitForSecondsRealtime(1);
             remainingTime--;
         }
-        
+
         countDownText.text = "Game Started!";
         var position = playersSpawnArea.position;
         
