@@ -235,16 +235,4 @@ public class RFMPlayerX : MonoBehaviourPunCallbacks, IPunObservable
     #endif
 
     #endregion
-
-    public void SetPosition(Vector3 position, Quaternion rotation)
-    {
-        photonView.RPC("ChatMessage", RpcTarget.All, position, rotation);
-    }
-    
-    [PunRPC]
-    void ChatMessage(Vector3 position, Quaternion rotation)
-    {
-        Debug.LogError("Position Reset!");
-        transform.SetPositionAndRotation(position, rotation);
-    }
 }

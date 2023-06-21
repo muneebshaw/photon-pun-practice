@@ -96,6 +96,8 @@ public class RFMManagerX : MonoBehaviourPunCallbacks
 
     private IEnumerator StartGame()
     {
+        photonView.RPC(nameof(StartCountDownRPC), RpcTarget.Others);
+        
         countDownText.gameObject.SetActive(true);
         var remainingTime = countDownTime;
 
@@ -107,27 +109,55 @@ public class RFMManagerX : MonoBehaviourPunCallbacks
         }
 
         countDownText.text = "Game Started!";
-        var position = playersSpawnArea.position;
         
-        var randomPos = new Vector3(
-            position.x + Random.Range(-4, 5),
-            position.y,
-            position.z + Random.Range(-2, 3));
-
-        
-        RFMPlayerX.LocalPlayerInstance.GetComponent<RFMPlayerX>().SetPosition(randomPos, Quaternion.identity);
-
         if (PhotonNetwork.IsMasterClient)
         {
+            photonView.RPC(nameof(ResetPosition), RpcTarget.All);
             Debug.LogError("PhotonNetwork : MasterClient spawning hunters.");
             PhotonNetwork.Instantiate(hunterPrefab.name, huntersSpawnArea.position, huntersSpawnArea.rotation);
         }
-        
+
         // _countDownTimer.Stop();
         // _countDownTimer.Dispose();
         
         yield return new WaitForSecondsRealtime(1);
         countDownText.gameObject.SetActive(false);
+    }
+
+    [PunRPC]
+    private void StartCountDownRPC()
+    {
+        StartCoroutine(StartCountDown());
+    }
+    
+    
+    private IEnumerator StartCountDown()
+    {
+        countDownText.gameObject.SetActive(true);
+        var remainingTime = countDownTime;
+
+        while (remainingTime > 0)
+        {
+            countDownText.text = remainingTime.ToString();
+            yield return new WaitForSecondsRealtime(1);
+            remainingTime--;
+        }
+
+        countDownText.text = "Game Started!";
+        yield return new WaitForSecondsRealtime(1);
+        countDownText.gameObject.SetActive(false);
+    }
+    
+    [PunRPC]
+    private void ResetPosition()
+    {
+        var randomPos = new Vector3(
+            playersSpawnArea.position.x + Random.Range(-4, 5),
+            playersSpawnArea.position.y,
+            playersSpawnArea.position.z + Random.Range(-2, 3));
+        
+        Debug.LogError("Position Reset!");
+        RFMPlayerX.LocalPlayerInstance.transform.SetPositionAndRotation(randomPos, Quaternion.identity);
     }
 
     #endregion
