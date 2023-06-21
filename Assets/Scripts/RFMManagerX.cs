@@ -79,22 +79,20 @@ public class RFMManagerX : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.CurrentRoom.PlayerCount >= 2)
         {
-            StartCountdown();
+            StartCoroutine(StartGame());
         }
     }
 
     // private static Timer _countDownTimer;
 
-    private void StartCountdown()
-    {
-        Debug.LogError("Countdown started!");
-        // _countDownTimer = new Timer(5000);
-        // _countDownTimer.Elapsed += StartGame;
-        // _countDownTimer.AutoReset = false;
-        // _countDownTimer.Enabled = true;
-        
-        StartCoroutine(StartGame());
-    }
+    // private void StartCountdown()
+    // {
+    //     Debug.LogError("Countdown started!");
+    //     // _countDownTimer = new Timer(5000);
+    //     // _countDownTimer.Elapsed += StartGame;
+    //     // _countDownTimer.AutoReset = false;
+    //     // _countDownTimer.Enabled = true;
+    // }
 
     private IEnumerator StartGame()
     {
@@ -140,7 +138,7 @@ public class RFMManagerX : MonoBehaviourPunCallbacks
     {
         Debug.LogFormat("OnPlayerEnteredRoom() {0}", other.NickName); // not seen if you're the player connecting
 
-        if (PhotonNetwork.IsMasterClient)
+        // if (PhotonNetwork.IsMasterClient)
         {
             Debug.LogFormat("OnPlayerEnteredRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient); // called before OnPlayerLeftRoom
 
@@ -152,7 +150,7 @@ public class RFMManagerX : MonoBehaviourPunCallbacks
     {
         Debug.LogFormat("OnPlayerLeftRoom() {0}", other.NickName); // seen when other disconnects
 
-        if (PhotonNetwork.IsMasterClient)
+        // if (PhotonNetwork.IsMasterClient)
         {
             Debug.LogFormat("OnPlayerLeftRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient); // called before OnPlayerLeftRoom
 
