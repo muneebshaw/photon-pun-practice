@@ -1,6 +1,7 @@
-using System.Timers;
+using System.Collections;
 using Photon.Pun;
 using Photon.Realtime;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,6 +13,8 @@ public class RFMManagerX : MonoBehaviourPunCallbacks
 
     [SerializeField] private Transform playersSpawnArea;
     [SerializeField] private Transform huntersSpawnArea;
+
+    [SerializeField] private TextMeshProUGUI countDownText;
 
     private void Start()
     {
@@ -89,30 +92,52 @@ public class RFMManagerX : MonoBehaviourPunCallbacks
         // _countDownTimer.AutoReset = false;
         // _countDownTimer.Enabled = true;
         
-        Invoke(nameof(StartGame), 5);
+        StartCoroutine(StartGame());
     }
 
-    private void StartGame(/*object sender, ElapsedEventArgs elapsedEventArgs*/)
+    private IEnumerator StartGame()
     {
-        Debug.LogError("Game started! at: "/* + elapsedEventArgs.SignalTime*/);
-
+        countDownText.gameObject.SetActive(true);
+        countDownText.text = 5.ToString();
+        yield return new WaitForSecondsRealtime(1);
+        countDownText.text = 4.ToString();
+        yield return new WaitForSecondsRealtime(1);
+        countDownText.text = 3.ToString();
+        yield return new WaitForSecondsRealtime(1);
+        countDownText.text = 2.ToString();
+        yield return new WaitForSecondsRealtime(1);
+        countDownText.text = 1.ToString();
+        yield return new WaitForSecondsRealtime(1);
+        countDownText.text = "Game Started!";
+        
         var position = playersSpawnArea.position;
-        RFMPlayerX.LocalPlayerInstance.transform.Translate(new Vector3(
+        
+        var randomPos = new Vector3(
             position.x + Random.Range(-4, 5),
             position.y,
-            position.z + Random.Range(-2, 3)));
+            position.z + Random.Range(-2, 3));
+
+        int temp = 0;
+
+        while (temp < 50)
+        {
+            RFMPlayerX.LocalPlayerInstance.transform.Translate(randomPos);
+            RFMPlayerX.LocalPlayerInstance.transform.rotation = Quaternion.identity;
+            temp++;
+        }
         
-        RFMPlayerX.LocalPlayerInstance.transform.rotation = Quaternion.identity;
 
         if (PhotonNetwork.IsMasterClient)
         {
             Debug.LogError("PhotonNetwork : MasterClient spawning hunters.");
             PhotonNetwork.Instantiate(hunterPrefab.name, huntersSpawnArea.position, huntersSpawnArea.rotation);
         }
-
-        Debug.LogError("Finished!");
+        
         // _countDownTimer.Stop();
         // _countDownTimer.Dispose();
+        
+        yield return new WaitForSecondsRealtime(1);
+        countDownText.gameObject.SetActive(false);
     }
 
     #endregion
