@@ -104,7 +104,11 @@ public class RFMManagerX : MonoBehaviourPunCallbacks
         
         RFMPlayerX.LocalPlayerInstance.transform.rotation = Quaternion.identity;
 
-        PhotonNetwork.Instantiate(hunterPrefab.name, huntersSpawnArea.position, huntersSpawnArea.rotation);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Debug.LogError("PhotonNetwork : MasterClient spawning hunters.");
+            PhotonNetwork.Instantiate(hunterPrefab.name, huntersSpawnArea.position, huntersSpawnArea.rotation);
+        }
     }
 
     #endregion
