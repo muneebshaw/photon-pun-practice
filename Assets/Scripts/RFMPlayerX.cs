@@ -212,12 +212,14 @@ public class RFMPlayerX : MonoBehaviourPunCallbacks, IPunObservable
             // We own this player: send the others our data
             stream.SendNext(IsFiring);
             stream.SendNext(Health);
+            stream.SendNext(transform.position);
         }
         else
         {
             // Network player, receive data
             this.IsFiring = (bool)stream.ReceiveNext();
             this.Health = (float)stream.ReceiveNext();
+            transform.position = (Vector3)stream.ReceiveNext();
         }
     }
 
