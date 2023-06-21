@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 public class RFMManagerX : MonoBehaviourPunCallbacks
 {
@@ -97,6 +99,7 @@ public class RFMManagerX : MonoBehaviourPunCallbacks
     private IEnumerator StartGame()
     {
         photonView.RPC(nameof(StartCountDownRPC), RpcTarget.Others);
+        Debug.LogError("Here");
         
         countDownText.gameObject.SetActive(true);
         var remainingTime = countDownTime;
@@ -189,4 +192,9 @@ public class RFMManagerX : MonoBehaviourPunCallbacks
     }
 
     #endregion
+
+    private void OnGUI()
+    {
+        GUI.Label(new Rect(10, 10, 200, 75), PhotonNetwork.IsMasterClient.ToString());
+    }
 }
