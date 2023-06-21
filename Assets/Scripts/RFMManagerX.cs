@@ -1,4 +1,4 @@
-using System;
+using System.Timers;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
@@ -68,6 +68,29 @@ public class RFMManagerX : MonoBehaviourPunCallbacks
         // }
         // Debug.LogFormat("PhotonNetwork : Loading Level : {0}", PhotonNetwork.CurrentRoom.PlayerCount);
         // PhotonNetwork.LoadLevel("Room for " + PhotonNetwork.CurrentRoom.PlayerCount);
+
+        if (PhotonNetwork.CurrentRoom.PlayerCount >= 2)
+        {
+            StartCountdown();
+        }
+    }
+
+    private static Timer _countDownTimer;
+
+    private void StartCountdown()
+    {
+        Debug.LogError("Countdown started!");
+        _countDownTimer = new Timer(5000);
+        _countDownTimer.Elapsed += StartGame;
+        _countDownTimer.AutoReset = false;
+        _countDownTimer.Enabled = true;
+    }
+
+    private void StartGame(object sender, ElapsedEventArgs elapsedEventArgs)
+    {
+        Debug.LogError("Game started! at: " + elapsedEventArgs.SignalTime);
+        _countDownTimer.Stop();
+        _countDownTimer.Dispose();
     }
 
     #endregion
