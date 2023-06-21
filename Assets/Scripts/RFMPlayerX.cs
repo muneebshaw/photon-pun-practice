@@ -65,22 +65,8 @@ public class RFMPlayerX : MonoBehaviourPunCallbacks, IPunObservable
     /// </summary>
     void Start()
     {
-        
-        // CameraWorkX cameraWorkX = this.gameObject.GetComponent<CameraWorkX>();
-        //
-        // if (cameraWorkX != null)
-        // {
-        //     if (photonView.IsMine)
-        //     {
-        //         // CameraTargetSetter.Instance.SetTarget(cameraTarget);
-        //         cameraWorkX.OnStartFollowing(cameraTarget);
-        //     }
-        // }
-        // else
-        // {
-        //     Debug.LogError("<Color=Red><a>Missing</a></Color> CameraWork Component on playerPrefab.", this);
-        // }
-        
+        // camera work
+
         if (PlayerUiPrefab != null)
         {
             GameObject _uiGo =  Instantiate(PlayerUiPrefab);
@@ -247,4 +233,10 @@ public class RFMPlayerX : MonoBehaviourPunCallbacks, IPunObservable
     #endif
 
     #endregion
+
+    public void SetPosition(Vector3 position, Quaternion rotation)
+    {
+        Debug.LogError("Position Reset!");
+        transform.SetPositionAndRotation(position, rotation);
+    }
 }

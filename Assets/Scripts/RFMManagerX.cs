@@ -117,15 +117,8 @@ public class RFMManagerX : MonoBehaviourPunCallbacks
             position.y,
             position.z + Random.Range(-2, 3));
 
-        int temp = 0;
-
-        while (temp < 50)
-        {
-            RFMPlayerX.LocalPlayerInstance.transform.Translate(randomPos);
-            RFMPlayerX.LocalPlayerInstance.transform.rotation = Quaternion.identity;
-            temp++;
-        }
         
+        RFMPlayerX.LocalPlayerInstance.GetComponent<RFMPlayerX>().SetPosition(randomPos, Quaternion.identity);
 
         if (PhotonNetwork.IsMasterClient)
         {
