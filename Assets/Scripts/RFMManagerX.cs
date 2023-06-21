@@ -98,7 +98,7 @@ public class RFMManagerX : MonoBehaviourPunCallbacks
 
     private IEnumerator StartGame()
     {
-        photonView.RPC(nameof(StartCountDownRPC), RpcTarget.Others);
+        photonView.RPC("StartCountDownRPC", RpcTarget.Others);
         Debug.LogError("Here");
         
         countDownText.gameObject.SetActive(true);
