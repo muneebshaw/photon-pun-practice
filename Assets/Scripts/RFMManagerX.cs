@@ -14,6 +14,7 @@ public class RFMManagerX : MonoBehaviourPunCallbacks
     [SerializeField] private Transform playersSpawnArea;
     [SerializeField] private Transform huntersSpawnArea;
 
+    [SerializeField] private int countDownTime = 5;
     [SerializeField] private TextMeshProUGUI countDownText;
 
     private void Start()
@@ -98,18 +99,16 @@ public class RFMManagerX : MonoBehaviourPunCallbacks
     private IEnumerator StartGame()
     {
         countDownText.gameObject.SetActive(true);
-        countDownText.text = 5.ToString();
-        yield return new WaitForSecondsRealtime(1);
-        countDownText.text = 4.ToString();
-        yield return new WaitForSecondsRealtime(1);
-        countDownText.text = 3.ToString();
-        yield return new WaitForSecondsRealtime(1);
-        countDownText.text = 2.ToString();
-        yield return new WaitForSecondsRealtime(1);
-        countDownText.text = 1.ToString();
-        yield return new WaitForSecondsRealtime(1);
-        countDownText.text = "Game Started!";
+        var remainingTime = countDownTime;
+
+        while (remainingTime > 0)
+        {
+            countDownText.text = remainingTime.ToString();
+            yield return new WaitForSecondsRealtime(1);
+            remainingTime--;
+        }
         
+        countDownText.text = "Game Started!";
         var position = playersSpawnArea.position;
         
         var randomPos = new Vector3(
