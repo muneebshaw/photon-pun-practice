@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
-public class RFMManagerX : MonoBehaviourPunCallbacks
+public class RFMManagerX : MonoBehaviourPunCallbacks, IPunObservable
 {
     public static RFMManagerX Instance;
     public GameObject playerPrefab;
@@ -101,7 +101,6 @@ public class RFMManagerX : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             Debug.LogError("1");
-            PhotonView photonView = PhotonView.Get(this);
             photonView.RPC(nameof(StartCountDownRPC), RpcTarget.Others);
             Debug.LogError("2");
         }
@@ -201,5 +200,10 @@ public class RFMManagerX : MonoBehaviourPunCallbacks
     private void OnGUI()
     {
         GUI.Label(new Rect(10, 10, 200, 75), PhotonNetwork.IsMasterClient.ToString());
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        
     }
 }
