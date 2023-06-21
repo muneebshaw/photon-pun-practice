@@ -98,8 +98,12 @@ public class RFMManagerX : MonoBehaviourPunCallbacks
 
     private IEnumerator StartGame()
     {
-        // photonView.RPC("StartCountDownRPC", RpcTarget.Others);
-        Debug.LogError("Here");
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Debug.LogError("1");
+            photonView.RPC(nameof(StartCountDownRPC), RpcTarget.Others);
+            Debug.LogError("2");
+        }
         
         countDownText.gameObject.SetActive(true);
         var remainingTime = countDownTime;
