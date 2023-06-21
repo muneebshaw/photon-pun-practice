@@ -46,3 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 4416926081852918481, guid: 64dce48905ffd9b4293e595fa6941544,
     type: 3}
+  hunterPrefab: {fileID: 4416926081852918481, guid: 9ebab977befe96b4db84ab3bbe353251,
+    type: 3}
+  playersSpawnArea: {fileID: 0}
+  huntersSpawnArea: {fileID: 0}

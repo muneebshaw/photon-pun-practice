@@ -8,6 +8,10 @@ public class RFMManagerX : MonoBehaviourPunCallbacks
 {
     public static RFMManagerX Instance;
     public GameObject playerPrefab;
+    public GameObject hunterPrefab;
+
+    [SerializeField] private Transform playersSpawnArea;
+    [SerializeField] private Transform huntersSpawnArea;
 
     private void Start()
     {
@@ -91,6 +95,16 @@ public class RFMManagerX : MonoBehaviourPunCallbacks
         Debug.LogError("Game started! at: " + elapsedEventArgs.SignalTime);
         _countDownTimer.Stop();
         _countDownTimer.Dispose();
+
+        var position = playersSpawnArea.position;
+        RFMPlayerX.LocalPlayerInstance.transform.position = new Vector3(
+            position.x + Random.Range(-4, 5),
+            position.y,
+            position.z + Random.Range(-2, 3));
+        
+        RFMPlayerX.LocalPlayerInstance.transform.rotation = Quaternion.identity;
+
+        PhotonNetwork.Instantiate(hunterPrefab.name, huntersSpawnArea.position, huntersSpawnArea.rotation);
     }
 
     #endregion
