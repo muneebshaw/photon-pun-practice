@@ -97,10 +97,10 @@ public class RFMManagerX : MonoBehaviourPunCallbacks
         Debug.LogError("Game started! at: "/* + elapsedEventArgs.SignalTime*/);
 
         var position = playersSpawnArea.position;
-        RFMPlayerX.LocalPlayerInstance.transform.position = new Vector3(
+        RFMPlayerX.LocalPlayerInstance.transform.Translate(new Vector3(
             position.x + Random.Range(-4, 5),
             position.y,
-            position.z + Random.Range(-2, 3));
+            position.z + Random.Range(-2, 3)));
         
         RFMPlayerX.LocalPlayerInstance.transform.rotation = Quaternion.identity;
 
@@ -109,7 +109,7 @@ public class RFMManagerX : MonoBehaviourPunCallbacks
             Debug.LogError("PhotonNetwork : MasterClient spawning hunters.");
             PhotonNetwork.Instantiate(hunterPrefab.name, huntersSpawnArea.position, huntersSpawnArea.rotation);
         }
-        
+
         Debug.LogError("Finished!");
         // _countDownTimer.Stop();
         // _countDownTimer.Dispose();
