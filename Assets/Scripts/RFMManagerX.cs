@@ -79,20 +79,22 @@ public class RFMManagerX : MonoBehaviourPunCallbacks
         }
     }
 
-    private static Timer _countDownTimer;
+    // private static Timer _countDownTimer;
 
     private void StartCountdown()
     {
         Debug.LogError("Countdown started!");
-        _countDownTimer = new Timer(5000);
-        _countDownTimer.Elapsed += StartGame;
-        _countDownTimer.AutoReset = false;
-        _countDownTimer.Enabled = true;
+        // _countDownTimer = new Timer(5000);
+        // _countDownTimer.Elapsed += StartGame;
+        // _countDownTimer.AutoReset = false;
+        // _countDownTimer.Enabled = true;
+        
+        Invoke(nameof(StartGame), 5);
     }
 
-    private void StartGame(object sender, ElapsedEventArgs elapsedEventArgs)
+    private void StartGame(/*object sender, ElapsedEventArgs elapsedEventArgs*/)
     {
-        Debug.LogError("Game started! at: " + elapsedEventArgs.SignalTime);
+        Debug.LogError("Game started! at: "/* + elapsedEventArgs.SignalTime*/);
 
         var position = playersSpawnArea.position;
         RFMPlayerX.LocalPlayerInstance.transform.position = new Vector3(
@@ -109,8 +111,8 @@ public class RFMManagerX : MonoBehaviourPunCallbacks
         }
         
         Debug.LogError("Finished!");
-        _countDownTimer.Stop();
-        _countDownTimer.Dispose();
+        // _countDownTimer.Stop();
+        // _countDownTimer.Dispose();
     }
 
     #endregion
