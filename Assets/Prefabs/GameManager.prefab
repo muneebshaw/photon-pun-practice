@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5208218170476652366}
   - component: {fileID: 6968900763531719545}
-  - component: {fileID: 1177333105963768520}
+  - component: {fileID: -3712180235331356463}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -53,7 +53,7 @@ MonoBehaviour:
   huntersSpawnArea: {fileID: 0}
   countDownTime: 5
   countDownText: {fileID: 0}
---- !u!114 &1177333105963768520
+--- !u!114 &-3712180235331356463
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

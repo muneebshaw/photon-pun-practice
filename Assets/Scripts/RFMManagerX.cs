@@ -19,6 +19,11 @@ public class RFMManagerX : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] private int countDownTime = 5;
     [SerializeField] private TextMeshProUGUI countDownText;
 
+    private void Awake()
+    {
+        photonView.ViewID = 9000;
+    }
+
     private void Start()
     {
         Instance = this;
@@ -100,26 +105,26 @@ public class RFMManagerX : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            Debug.LogError("1");
-            photonView.RPC(nameof(StartCountDownRPC), RpcTarget.Others, "asd");
-            Debug.LogError("2");
+            photonView.RPC(nameof(StartCountDownRPC), RpcTarget.Others);
         }
         
-        countDownText.gameObject.SetActive(true);
-        var remainingTime = countDownTime;
+        // countDownText.gameObject.SetActive(true);
+        // var remainingTime = countDownTime;
+        //
+        // while (remainingTime > 0)
+        // {
+        //     countDownText.text = remainingTime.ToString();
+        //     yield return new WaitForSecondsRealtime(1);
+        //     remainingTime--;
+        // }
+        //
+        // countDownText.text = "Game Started!";
 
-        while (remainingTime > 0)
-        {
-            countDownText.text = remainingTime.ToString();
-            yield return new WaitForSecondsRealtime(1);
-            remainingTime--;
-        }
-
-        countDownText.text = "Game Started!";
+        yield return StartCoroutine(StartCountDown());
         
         if (PhotonNetwork.IsMasterClient)
         {
-            photonView.RPC(nameof(ResetPosition), RpcTarget.All, "asd");
+            photonView.RPC(nameof(ResetPosition), RpcTarget.All);
             Debug.LogError("PhotonNetwork : MasterClient spawning hunters.");
             PhotonNetwork.Instantiate(hunterPrefab.name, huntersSpawnArea.position, huntersSpawnArea.rotation);
         }
@@ -132,7 +137,7 @@ public class RFMManagerX : MonoBehaviourPunCallbacks, IPunObservable
     }
 
     [PunRPC]
-    private void StartCountDownRPC(string s)
+    private void StartCountDownRPC()
     {
         StartCoroutine(StartCountDown());
     }
@@ -149,22 +154,27 @@ public class RFMManagerX : MonoBehaviourPunCallbacks, IPunObservable
             yield return new WaitForSecondsRealtime(1);
             remainingTime--;
         }
-
-        countDownText.text = "Game Started!";
-        yield return new WaitForSecondsRealtime(1);
-        countDownText.gameObject.SetActive(false);
     }
     
     [PunRPC]
-    private void ResetPosition(string s)
+    private void ResetPosition()
     {
+        var position = playersSpawnArea.position;
         var randomPos = new Vector3(
-            playersSpawnArea.position.x + Random.Range(-4, 5),
-            playersSpawnArea.position.y,
-            playersSpawnArea.position.z + Random.Range(-2, 3));
+            position.x + Random.Range(-4, 5),
+            position.y,
+            position.z + Random.Range(-2, 3));
         
-        Debug.LogError("Position Reset!");
         RFMPlayerX.LocalPlayerInstance.transform.SetPositionAndRotation(randomPos, Quaternion.identity);
+        
+        StartCoroutine(StopCountDown());
+    }
+    
+    private IEnumerator StopCountDown()
+    {
+        countDownText.text = "Game Started!";
+        yield return new WaitForSecondsRealtime(1);
+        countDownText.gameObject.SetActive(false);
     }
 
     #endregion
