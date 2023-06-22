@@ -101,7 +101,7 @@ public class RFMManagerX : MonoBehaviourPunCallbacks, IPunObservable
         if (PhotonNetwork.IsMasterClient)
         {
             Debug.LogError("1");
-            photonView.RPC(nameof(StartCountDownRPC), RpcTarget.Others);
+            photonView.RPC(nameof(StartCountDownRPC), RpcTarget.Others, "asd");
             Debug.LogError("2");
         }
         
@@ -119,7 +119,7 @@ public class RFMManagerX : MonoBehaviourPunCallbacks, IPunObservable
         
         if (PhotonNetwork.IsMasterClient)
         {
-            photonView.RPC(nameof(ResetPosition), RpcTarget.All);
+            photonView.RPC(nameof(ResetPosition), RpcTarget.All, "asd");
             Debug.LogError("PhotonNetwork : MasterClient spawning hunters.");
             PhotonNetwork.Instantiate(hunterPrefab.name, huntersSpawnArea.position, huntersSpawnArea.rotation);
         }
@@ -132,7 +132,7 @@ public class RFMManagerX : MonoBehaviourPunCallbacks, IPunObservable
     }
 
     [PunRPC]
-    private void StartCountDownRPC()
+    private void StartCountDownRPC(string s)
     {
         StartCoroutine(StartCountDown());
     }
@@ -156,7 +156,7 @@ public class RFMManagerX : MonoBehaviourPunCallbacks, IPunObservable
     }
     
     [PunRPC]
-    private void ResetPosition()
+    private void ResetPosition(string s)
     {
         var randomPos = new Vector3(
             playersSpawnArea.position.x + Random.Range(-4, 5),
