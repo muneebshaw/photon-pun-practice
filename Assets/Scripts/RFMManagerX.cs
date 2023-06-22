@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
-public class RFMManagerX : MonoBehaviourPunCallbacks
+public class RFMManagerX : MonoBehaviourPunCallbacks, IPunObservable
 {
     public static RFMManagerX Instance;
     public GameObject playerPrefab;
