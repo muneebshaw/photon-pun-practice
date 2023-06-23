@@ -183,7 +183,7 @@ public class RFMManagerX : MonoBehaviourPunCallbacks, IPunObservable
 
     public override void OnJoinedRoom()
     {
-        Debug.LogError("OnJoinedRoom");
+        Debug.LogError("OnJoinedRoom " + PhotonNetwork.NickName);
     }
 
     public override void OnPlayerEnteredRoom(Player other)
