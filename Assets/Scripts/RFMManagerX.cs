@@ -181,6 +181,11 @@ public class RFMManagerX : MonoBehaviourPunCallbacks, IPunObservable
     
     #region Photon Callbacks
 
+    public override void OnJoinedRoom()
+    {
+        Debug.LogError("OnJoinedRoom");
+    }
+
     public override void OnPlayerEnteredRoom(Player other)
     {
         Debug.LogFormat("OnPlayerEnteredRoom() {0}", other.NickName); // not seen if you're the player connecting
